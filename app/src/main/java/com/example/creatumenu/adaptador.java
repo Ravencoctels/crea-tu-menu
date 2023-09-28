@@ -6,10 +6,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
-
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -20,13 +18,13 @@ public class adaptador extends RecyclerView.Adapter<adaptador.ItemViewHolder> {
 
     public adaptador(Context context) {
         this.context = context;
-        this.itemList = new ArrayList<>(); // Inicializa la lista vacía
+        this.itemList = new ArrayList<>();
     }
 
     public void setData(List<lista_elementos> itemList) {
-        this.itemList.clear(); // Borra los elementos existentes
-        this.itemList.addAll(itemList); // Agrega los nuevos elementos
-        notifyDataSetChanged(); // Notifica que los datos han cambiado
+        this.itemList.clear();
+        this.itemList.addAll(itemList);
+        notifyDataSetChanged();
     }
 
     @NonNull
