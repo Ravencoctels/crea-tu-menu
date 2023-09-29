@@ -22,7 +22,7 @@
                 android:id="@+id/text"
                 android:layout_width="match_parent"
                 android:layout_height="79dp"
-                android:text="Crea Tu Menú"
+                android:text="Cocina Tu Menú"
                 android:textAlignment="center"
                 android:textStyle="italic"
                 android:textSize="50sp" />

@@ -16,7 +16,6 @@ public class MainActivity extends AppCompatActivity {
     private adaptador hamburgesasAdapter;
     private adaptador pizzasAdapter;
     private adaptador bebidasAdapter;
-
     private carrito carrito;
 
     @Override
@@ -28,19 +27,17 @@ public class MainActivity extends AppCompatActivity {
         pizzasRecyclerView = findViewById(R.id.pizzas);
         bebidasRecyclerView = findViewById(R.id.bebidas);
 
-        // Inicializar el carrito
+
         carrito = new carrito();
 
-        // Create separate adapters for each RecyclerView
         hamburgesasAdapter = new adaptador(this, new adaptador.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-                // Agregar el nombre y el precio del elemento al carrito
+
                 lista_elementos item = hamburgesasAdapter.getItemList().get(position);
                 String itemInfo = item.getNombre() + " - $" + item.getPrecio();
                 carrito.agregarItem(itemInfo);
 
-                // Mostrar un mensaje para confirmar la adición al carrito
                 Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
             }
         });
@@ -67,7 +64,7 @@ public class MainActivity extends AppCompatActivity {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
-        // Set the adapters and layout managers for each RecyclerView
+
         hamburgesasRecyclerView.setAdapter(hamburgesasAdapter);
         hamburgesasRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -77,7 +74,7 @@ public class MainActivity extends AppCompatActivity {
         bebidasRecyclerView.setAdapter(bebidasAdapter);
         bebidasRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        // Populate each RecyclerView with its respective data
+
         List<lista_elementos> dataHamburguesas = getHamburguesasData();
         hamburgesasAdapter.setData(dataHamburguesas);
 
@@ -101,7 +98,7 @@ public class MainActivity extends AppCompatActivity {
         list.add(new lista_elementos(R.drawable.margarita, "Pizza Margarita", "Salsa de tomate, Mozzarella, Albahaca fresca", 12000));
         list.add(new lista_elementos(R.drawable.pepperoni, "Pizza Pepperoni", "Salsa de tomate, Mozzarella, Pepperoni, Pimientos", 13000));
         list.add(new lista_elementos(R.drawable.hawaiana, "Pizza Hawaiana", "Salsa de tomate, Mozzarella, Jamón, Piña", 14000));
-        // Agrega más elementos de pizzas aquí
+
         return list;
     }
 
@@ -110,7 +107,7 @@ public class MainActivity extends AppCompatActivity {
         list.add(new lista_elementos(R.drawable.coca, "Coca-Cola", "Refresco carbonatado", 2500));
         list.add(new lista_elementos(R.drawable.agua, "Agua Mineral", "Agua natural sin gas", 1500));
         list.add(new lista_elementos(R.drawable.naranja, "Jugo de Naranja", "Jugo de naranja fresco", 2000));
-        // Agrega más elementos de bebidas aquí
+
         return list;
     }
 }
