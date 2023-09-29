@@ -4,45 +4,80 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
+import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private RecyclerView hamburgesas;
-    private RecyclerView pizzas;
-    private RecyclerView bebidas;
+    private RecyclerView hamburgesasRecyclerView;
+    private RecyclerView pizzasRecyclerView;
+    private RecyclerView bebidasRecyclerView;
     private adaptador hamburgesasAdapter;
     private adaptador pizzasAdapter;
     private adaptador bebidasAdapter;
+
+    private carrito carrito;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        hamburgesas = findViewById(R.id.hamburgesas);
-        pizzas = findViewById(R.id.pizzas);
-        bebidas = findViewById(R.id.bebidas);
+        hamburgesasRecyclerView = findViewById(R.id.hamburgesas);
+        pizzasRecyclerView = findViewById(R.id.pizzas);
+        bebidasRecyclerView = findViewById(R.id.bebidas);
 
+        // Inicializar el carrito
+        carrito = new carrito();
 
-        hamburgesasAdapter = new adaptador(this);
-        pizzasAdapter = new adaptador(this);
-        bebidasAdapter = new adaptador(this);
+        // Create separate adapters for each RecyclerView
+        hamburgesasAdapter = new adaptador(this, new adaptador.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                // Agregar el nombre y el precio del elemento al carrito
+                lista_elementos item = hamburgesasAdapter.getItemList().get(position);
+                String itemInfo = item.getNombre() + " - $" + item.getPrecio();
+                carrito.agregarItem(itemInfo);
+
+                // Mostrar un mensaje para confirmar la adición al carrito
+                Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        pizzasAdapter = new adaptador(this, new adaptador.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                lista_elementos item = pizzasAdapter.getItemList().get(position);
+                String itemInfo = item.getNombre() + " - $" + item.getPrecio();
+                carrito.agregarItem(itemInfo);
+                Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        bebidasAdapter = new adaptador(this, new adaptador.OnItemClickListener() {
+            @Override
+            public void onItemClick(int position) {
+                lista_elementos item = bebidasAdapter.getItemList().get(position);
+                String itemInfo = item.getNombre() + " - $" + item.getPrecio();
+                carrito.agregarItem(itemInfo);
+                Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
+            }
+        });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
 
+        // Set the adapters and layout managers for each RecyclerView
+        hamburgesasRecyclerView.setAdapter(hamburgesasAdapter);
+        hamburgesasRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        hamburgesas.setAdapter(hamburgesasAdapter);
-        hamburgesas.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        pizzasRecyclerView.setAdapter(pizzasAdapter);
+        pizzasRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        pizzas.setAdapter(pizzasAdapter);
-        pizzas.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
+        bebidasRecyclerView.setAdapter(bebidasAdapter);
+        bebidasRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-        bebidas.setAdapter(bebidasAdapter);
-        bebidas.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false));
-
-
+        // Populate each RecyclerView with its respective data
         List<lista_elementos> dataHamburguesas = getHamburguesasData();
         hamburgesasAdapter.setData(dataHamburguesas);
 
@@ -55,24 +90,27 @@ public class MainActivity extends AppCompatActivity {
 
     public List<lista_elementos> getHamburguesasData() {
         List<lista_elementos> list = new ArrayList<>();
-        list.add(new lista_elementos(R.drawable.burger, "Hamburguesa Clásica", "Carne de res molida, Lechuga, Tomate, Cebolla, Queso cheddar, Pan de hamburguesa", 8000, "hay stock"));
-        list.add(new lista_elementos(R.drawable.burger, "Hamburguesa BBQ", "Carne de res molida, Salsa barbacoa, Cebolla caramelizada, Queso suizo, Pan de hamburguesa", 8500, "No hay stock"));
-        list.add(new lista_elementos(R.drawable.burger, "Hamburguesa Vegetariana", "Hamburguesa de garbanzos o soja, Lechuga, Tomate, Cebolla morada, Pan de hamburguesa integral", 9000, "hay stock"));
-        list.add(new lista_elementos(R.drawable.burger, "Hamburguesa Vegetariana", "Hamburguesa de garbanzos o soja, Lechuga, Tomate, Cebolla morada, Pan de hamburguesa integral", 9000, "no hay stock"));
+        list.add(new lista_elementos(R.drawable.burger, "Hamburguesa Clásica", "Carne de res molida, Lechuga, Tomate, Cebolla, Queso cheddar, Pan de hamburguesa", 8000));
+        list.add(new lista_elementos(R.drawable.bbq, "Hamburguesa BBQ", "Carne de res molida, Salsa barbacoa, Cebolla caramelizada, Queso suizo, Pan de hamburguesa", 8500));
+        list.add(new lista_elementos(R.drawable.vegetariana, "Hamburguesa Vegetariana", "Hamburguesa de garbanzos o soja, Lechuga, Tomate, Cebolla morada, Pan de hamburguesa integral", 9000));
         return list;
     }
 
     public List<lista_elementos> getPizzasData() {
         List<lista_elementos> list = new ArrayList<>();
-        list.add(new lista_elementos(R.drawable.pizza, "Pizza Margherita", "Tomato, Mozzarella, Basil", 10000, "hay stock"));
-        list.add(new lista_elementos(R.drawable.pizza, "Pizza Pepperoni", "Pepperoni, Tomato sauce, Mozzarella", 12000, "hay stock"));
+        list.add(new lista_elementos(R.drawable.margarita, "Pizza Margarita", "Salsa de tomate, Mozzarella, Albahaca fresca", 12000));
+        list.add(new lista_elementos(R.drawable.pepperoni, "Pizza Pepperoni", "Salsa de tomate, Mozzarella, Pepperoni, Pimientos", 13000));
+        list.add(new lista_elementos(R.drawable.hawaiana, "Pizza Hawaiana", "Salsa de tomate, Mozzarella, Jamón, Piña", 14000));
+        // Agrega más elementos de pizzas aquí
         return list;
     }
 
     public List<lista_elementos> getBebidasData() {
         List<lista_elementos> list = new ArrayList<>();
-        list.add(new lista_elementos(R.drawable.coca, "Coca-Cola", "330ml can", 2000, "hay stock"));
-        list.add(new lista_elementos(R.drawable.coca, "Sprite", "330ml can", 2000, "hay stock"));
+        list.add(new lista_elementos(R.drawable.coca, "Coca-Cola", "Refresco carbonatado", 2500));
+        list.add(new lista_elementos(R.drawable.agua, "Agua Mineral", "Agua natural sin gas", 1500));
+        list.add(new lista_elementos(R.drawable.naranja, "Jugo de Naranja", "Jugo de naranja fresco", 2000));
+        // Agrega más elementos de bebidas aquí
         return list;
     }
 }

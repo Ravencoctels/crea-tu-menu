@@ -1,20 +1,16 @@
 package com.example.creatumenu;
-
-import android.graphics.drawable.Drawable;
-
 public class lista_elementos {
     public int imagen;
     public String nombre;
     public String contenido;
     public int precio;
-    public String stock;
 
-    public lista_elementos(int imagen, String nombre, String contenido, int precio, String stock) {
+
+    public lista_elementos(int imagen, String nombre, String contenido, int precio) {
         this.imagen = imagen;
         this.nombre = nombre;
         this.contenido = contenido;
         this.precio = precio;
-        this.stock = stock;
     }
 
     public int getImagen() {
@@ -47,13 +43,5 @@ public class lista_elementos {
 
     public void setPrecio(int precio) {
         this.precio = precio;
-    }
-
-    public String getStock() {
-        return stock;
-    }
-
-    public void setStock(String stock) {
-        this.stock = stock;
     }
 }

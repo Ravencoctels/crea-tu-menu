@@ -38,7 +38,8 @@
                 android:id="@+id/textView3"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:textSize="50sp"
+                android:text="HAMBURGESAS" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/hamburgesas"
@@ -52,7 +53,8 @@
                 android:id="@+id/textView4"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:textSize="50sp"
+                android:text="PIZZAS" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/pizzas"
@@ -63,7 +65,8 @@
                 android:id="@+id/textView5"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="TextView" />
+                android:textSize="50sp"
+                android:text="BEBIDAS" />
 
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/bebidas"

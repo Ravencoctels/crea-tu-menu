@@ -6,6 +6,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.TextView;
+import android.widget.Button;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
@@ -15,10 +16,12 @@ public class adaptador extends RecyclerView.Adapter<adaptador.ItemViewHolder> {
 
     private List<lista_elementos> itemList;
     private Context context;
+    private OnItemClickListener listener;
 
-    public adaptador(Context context) {
+    public adaptador(Context context, OnItemClickListener listener) {
         this.context = context;
         this.itemList = new ArrayList<>();
+        this.listener = listener;
     }
 
     public void setData(List<lista_elementos> itemList) {
@@ -37,11 +40,18 @@ public class adaptador extends RecyclerView.Adapter<adaptador.ItemViewHolder> {
     @Override
     public void onBindViewHolder(@NonNull ItemViewHolder holder, int position) {
         lista_elementos item = itemList.get(position);
-        holder.ImageButton.setImageResource(item.getImagen());
+        holder.imageButton.setImageResource(item.getImagen());
         holder.textViewNombre.setText(item.getNombre());
         holder.textViewContenido.setText(item.getContenido());
         holder.textViewPrecio.setText("$" + item.getPrecio());
-        holder.textViewStock.setText(item.getStock());
+
+        holder.buttonAgregar.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+                listener.onItemClick(position);
+            }
+        });
     }
 
     @Override
@@ -49,21 +59,29 @@ public class adaptador extends RecyclerView.Adapter<adaptador.ItemViewHolder> {
         return itemList.size();
     }
 
+    public List<lista_elementos> getItemList() {
+        return itemList;
+    }
+
     class ItemViewHolder extends RecyclerView.ViewHolder {
 
-        ImageButton ImageButton;
+        ImageButton imageButton;
         TextView textViewNombre;
         TextView textViewContenido;
         TextView textViewPrecio;
-        TextView textViewStock;
+        Button buttonAgregar;
 
         public ItemViewHolder(@NonNull View itemView) {
             super(itemView);
-            ImageButton = itemView.findViewById(R.id.imagen_list);
+            imageButton = itemView.findViewById(R.id.imagen_list);
             textViewNombre = itemView.findViewById(R.id.nombre_list);
             textViewContenido = itemView.findViewById(R.id.contenido_list);
             textViewPrecio = itemView.findViewById(R.id.precio_list);
-            textViewStock = itemView.findViewById(R.id.stock_list);
+            buttonAgregar = itemView.findViewById(R.id.agregar_list);
         }
+    }
+
+    public interface OnItemClickListener {
+        void onItemClick(int position);
     }
 }
