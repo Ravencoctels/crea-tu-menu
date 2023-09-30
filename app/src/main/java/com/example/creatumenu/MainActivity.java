@@ -4,6 +4,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
 import android.widget.Toast;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,6 +20,7 @@ public class MainActivity extends AppCompatActivity {
     private adaptador pizzasAdapter;
     private adaptador bebidasAdapter;
     private carrito carrito;
+    private TextView carritoTextView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,18 +30,17 @@ public class MainActivity extends AppCompatActivity {
         hamburgesasRecyclerView = findViewById(R.id.hamburgesas);
         pizzasRecyclerView = findViewById(R.id.pizzas);
         bebidasRecyclerView = findViewById(R.id.bebidas);
-
+        carritoTextView = findViewById(R.id.carritoTextView);
 
         carrito = new carrito();
 
         hamburgesasAdapter = new adaptador(this, new adaptador.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
-
                 lista_elementos item = hamburgesasAdapter.getItemList().get(position);
                 String itemInfo = item.getNombre() + " - $" + item.getPrecio();
                 carrito.agregarItem(itemInfo);
-
+                actualizarCarritoTextView();
                 Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
             }
         });
@@ -48,22 +51,23 @@ public class MainActivity extends AppCompatActivity {
                 lista_elementos item = pizzasAdapter.getItemList().get(position);
                 String itemInfo = item.getNombre() + " - $" + item.getPrecio();
                 carrito.agregarItem(itemInfo);
+                actualizarCarritoTextView();
                 Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
             }
         });
 
-        bebidasAdapter = new adaptador(this, new adaptador.OnItemClickListener() {
+        bebidasAdapter =new adaptador(this, new adaptador.OnItemClickListener() {
             @Override
             public void onItemClick(int position) {
                 lista_elementos item = bebidasAdapter.getItemList().get(position);
                 String itemInfo = item.getNombre() + " - $" + item.getPrecio();
                 carrito.agregarItem(itemInfo);
+                actualizarCarritoTextView();
                 Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
             }
         });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
-
 
         hamburgesasRecyclerView.setAdapter(hamburgesasAdapter);
         hamburgesasRecyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -74,7 +78,6 @@ public class MainActivity extends AppCompatActivity {
         bebidasRecyclerView.setAdapter(bebidasAdapter);
         bebidasRecyclerView.setLayoutManager(new LinearLayoutManager(this));
 
-
         List<lista_elementos> dataHamburguesas = getHamburguesasData();
         hamburgesasAdapter.setData(dataHamburguesas);
 
@@ -83,6 +86,25 @@ public class MainActivity extends AppCompatActivity {
 
         List<lista_elementos> dataBebidas = getBebidasData();
         bebidasAdapter.setData(dataBebidas);
+    }
+
+    private void actualizarCarritoTextView() {
+        List<String> itemsEnCarrito = carrito.getItems();
+        int precioTotal = 0;
+
+        for (String item : itemsEnCarrito) {
+            String[] partes = item.split(" ");
+            if (partes.length > 0) {
+                try {
+                    int precioItem = Integer.parseInt(partes[partes.length - 1].replace("$", ""));
+                    precioTotal += precioItem;
+                } catch (NumberFormatException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        carritoTextView.setText("Precio Total: $" + precioTotal);
     }
 
     public List<lista_elementos> getHamburguesasData() {
