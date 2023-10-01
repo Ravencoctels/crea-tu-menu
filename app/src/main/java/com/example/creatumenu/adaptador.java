@@ -45,7 +45,6 @@ public class adaptador extends RecyclerView.Adapter<adaptador.ItemViewHolder> {
         holder.textViewContenido.setText(item.getContenido());
         holder.textViewPrecio.setText("$" + item.getPrecio());
 
-
         holder.buttonAgregar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

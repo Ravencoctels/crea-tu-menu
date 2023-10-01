@@ -28,9 +28,15 @@
                 android:textStyle="italic"
                 android:textSize="50sp" />
 
+            <HorizontalScrollView
+            android:id="@+id/shortcutScrollView"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:scrollbars="none">
+
             <LinearLayout
                 android:id="@+id/atajo"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="match_parent"
                 android:orientation="horizontal">
 
@@ -39,7 +45,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Hamburgesas" />
+                    android:text="Hamburguesas" />
 
                 <Button
                     android:id="@+id/button2"
@@ -61,7 +67,9 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
                     android:text="Postres" />
+
             </LinearLayout>
+        </HorizontalScrollView>
 
             <TextView
                 android:id="@+id/textView3"
@@ -105,11 +113,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
 
-
         </LinearLayout>
-
-
-
     </ScrollView>
 
     <TextView
@@ -122,6 +126,5 @@
         android:textColor="@color/black"
         android:textSize="24sp"
         android:textStyle="bold" />
-
 
 </LinearLayout>

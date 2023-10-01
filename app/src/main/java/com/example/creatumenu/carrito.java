@@ -19,7 +19,6 @@ public class carrito {
             items.remove(indice);
         }
     }
-
     public List<String> getItems() {
         return items;
     }

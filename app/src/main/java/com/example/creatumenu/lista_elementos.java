@@ -5,7 +5,6 @@ public class lista_elementos {
     public String contenido;
     public int precio;
 
-
     public lista_elementos(int imagen, String nombre, String contenido, int precio) {
         this.imagen = imagen;
         this.nombre = nombre;

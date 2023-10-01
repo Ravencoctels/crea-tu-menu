@@ -103,7 +103,6 @@ public class MainActivity extends AppCompatActivity {
                 }
             }
         }
-
         carritoTextView.setText("Precio Total: $" + precioTotal);
     }
 
@@ -129,7 +128,6 @@ public class MainActivity extends AppCompatActivity {
         list.add(new lista_elementos(R.drawable.coca, "Coca-Cola", "Refresco carbonatado", 2500));
         list.add(new lista_elementos(R.drawable.agua, "Agua Mineral", "Agua natural sin gas", 1500));
         list.add(new lista_elementos(R.drawable.naranja, "Jugo de Naranja", "Jugo de naranja fresco", 2000));
-
         return list;
     }
 }
