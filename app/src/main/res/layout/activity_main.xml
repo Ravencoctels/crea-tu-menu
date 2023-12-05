@@ -32,6 +32,7 @@
             android:id="@+id/shortcutScrollView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+                android:background="@color/boton"
             android:scrollbars="none">
 
             <LinearLayout
@@ -45,28 +46,32 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Hamburguesas" />
+                    android:text="Hamburguesas"
+                    style="@style/Widget.AppCompat.Button.Borderless" />
 
                 <Button
                     android:id="@+id/button2"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Pizzas" />
+                    android:text="Pizzas"
+                    style="@style/Widget.AppCompat.Button.Borderless" />
 
                 <Button
                     android:id="@+id/button3"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Bebidas" />
+                    android:text="Bebidas"
+                    style="@style/Widget.AppCompat.Button.Borderless" />
 
                 <Button
                     android:id="@+id/button4"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
-                    android:text="Postres" />
+                    android:text="Postres"
+                    style="@style/Widget.AppCompat.Button.Borderless" />
 
             </LinearLayout>
         </HorizontalScrollView>

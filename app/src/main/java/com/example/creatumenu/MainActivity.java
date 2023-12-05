@@ -1,13 +1,17 @@
 package com.example.creatumenu;
 
+import android.os.Bundle;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
+import com.google.firebase.FirebaseApp;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -21,11 +25,18 @@ public class MainActivity extends AppCompatActivity {
     private adaptador bebidasAdapter;
     private carrito carrito;
     private TextView carritoTextView;
+    private MqttHandler mqttHandler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Inicializa Firebase
+        inicializarBB();
+
+        // Inicializa MQTT
+        inicializarMQTT();
 
         hamburgesasRecyclerView = findViewById(R.id.hamburgesas);
         pizzasRecyclerView = findViewById(R.id.pizzas);
@@ -34,37 +45,28 @@ public class MainActivity extends AppCompatActivity {
 
         carrito = new carrito();
 
-        hamburgesasAdapter = new adaptador(this, new adaptador.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                lista_elementos item = hamburgesasAdapter.getItemList().get(position);
-                String itemInfo = item.getNombre() + " - $" + item.getPrecio();
-                carrito.agregarItem(itemInfo);
-                actualizarCarritoTextView();
-                Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
-            }
+        hamburgesasAdapter = new adaptador(this, position -> {
+            lista_elementos item = hamburgesasAdapter.getItemList().get(position);
+            String itemInfo = item.getNombre() + " - $" + item.getPrecio();
+            carrito.agregarItem(itemInfo);
+            actualizarCarritoTextView();
+            Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
         });
 
-        pizzasAdapter = new adaptador(this, new adaptador.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                lista_elementos item = pizzasAdapter.getItemList().get(position);
-                String itemInfo = item.getNombre() + " - $" + item.getPrecio();
-                carrito.agregarItem(itemInfo);
-                actualizarCarritoTextView();
-                Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
-            }
+        pizzasAdapter = new adaptador(this, position -> {
+            lista_elementos item = pizzasAdapter.getItemList().get(position);
+            String itemInfo = item.getNombre() + " - $" + item.getPrecio();
+            carrito.agregarItem(itemInfo);
+            actualizarCarritoTextView();
+            Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
         });
 
-        bebidasAdapter =new adaptador(this, new adaptador.OnItemClickListener() {
-            @Override
-            public void onItemClick(int position) {
-                lista_elementos item = bebidasAdapter.getItemList().get(position);
-                String itemInfo = item.getNombre() + " - $" + item.getPrecio();
-                carrito.agregarItem(itemInfo);
-                actualizarCarritoTextView();
-                Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
-            }
+        bebidasAdapter = new adaptador(this, position -> {
+            lista_elementos item = bebidasAdapter.getItemList().get(position);
+            String itemInfo = item.getNombre() + " - $" + item.getPrecio();
+            carrito.agregarItem(itemInfo);
+            actualizarCarritoTextView();
+            Toast.makeText(MainActivity.this, "Añadido al carrito: " + itemInfo, Toast.LENGTH_SHORT).show();
         });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
@@ -119,7 +121,6 @@ public class MainActivity extends AppCompatActivity {
         list.add(new lista_elementos(R.drawable.margarita, "Pizza Margarita", "Salsa de tomate, Mozzarella, Albahaca fresca", 12000));
         list.add(new lista_elementos(R.drawable.pepperoni, "Pizza Pepperoni", "Salsa de tomate, Mozzarella, Pepperoni, Pimientos", 13000));
         list.add(new lista_elementos(R.drawable.hawaiana, "Pizza Hawaiana", "Salsa de tomate, Mozzarella, Jamón, Piña", 14000));
-
         return list;
     }
 
@@ -129,5 +130,26 @@ public class MainActivity extends AppCompatActivity {
         list.add(new lista_elementos(R.drawable.agua, "Agua Mineral", "Agua natural sin gas", 1500));
         list.add(new lista_elementos(R.drawable.naranja, "Jugo de Naranja", "Jugo de naranja fresco", 2000));
         return list;
+    }
+
+    public void inicializarBB(){
+        FirebaseApp.initializeApp(this);
+        FirebaseDatabase db = FirebaseDatabase.getInstance();
+        DatabaseReference reference = db.getReference();
+    }
+
+    public void inicializarMQTT() {
+        // MQTT
+        String BROKER_URL = "mqtt://androidteststiqq.cloud.shiftr.io:1883";
+        String CLIENT_ID = "ControllApp";
+        mqttHandler = new MqttHandler();
+        mqttHandler.connect(BROKER_URL, CLIENT_ID, this);
+        mqttHandler.subscribe("Tema1");
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        mqttHandler.disconnect();
     }
 }
