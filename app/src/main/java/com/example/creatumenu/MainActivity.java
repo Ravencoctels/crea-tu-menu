@@ -140,7 +140,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void inicializarMQTT() {
         // MQTT
-        String BROKER_URL = "mqtt://androidteststiqq.cloud.shiftr.io:1883";
+        String BROKER_URL = "tcp://androidteststiqq.cloud.shiftr.io:1883";
         String CLIENT_ID = "ControllApp";
         mqttHandler = new MqttHandler();
         mqttHandler.connect(BROKER_URL, CLIENT_ID, this);
@@ -150,6 +150,5 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        mqttHandler.disconnect();
     }
 }

@@ -22,7 +22,6 @@ public class LoginActivity extends AppCompatActivity {
         clienteButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Redirige a MainActivity (menú de clientes)
                 Intent intent = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(intent);
             }
@@ -31,7 +30,6 @@ public class LoginActivity extends AppCompatActivity {
         adminButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                // Redirige a AdminLoginActivity
                 Intent intent = new Intent(LoginActivity.this, AdminLoginActivity.class);
                 startActivity(intent);
             }
