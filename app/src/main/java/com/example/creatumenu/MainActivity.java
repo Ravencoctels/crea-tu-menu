@@ -11,7 +11,6 @@ import android.widget.Toast;
 import com.google.firebase.FirebaseApp;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -141,10 +140,11 @@ public class MainActivity extends AppCompatActivity {
     public void inicializarMQTT() {
         // MQTT
         String BROKER_URL = "tcp://androidteststiqq.cloud.shiftr.io:1883";
-        String CLIENT_ID = "ControllApp";
+        String CLIENT_ID = "claudiorojas";
         mqttHandler = new MqttHandler();
         mqttHandler.connect(BROKER_URL, CLIENT_ID, this);
         mqttHandler.subscribe("Tema1");
+        mqttHandler.publish("Tema1","holaaaaa",getApplicationContext());
     }
 
     @Override

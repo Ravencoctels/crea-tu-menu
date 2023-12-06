@@ -26,8 +26,8 @@
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:radius="8dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginEnd="200dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="16dp"/>
 
     <Button
@@ -39,8 +39,8 @@
         android:textColor="@android:color/white"
         android:textSize="16sp"
         android:radius="8dp"
-        android:layout_marginStart="200dp"
-        android:layout_marginEnd="200dp"
+        android:layout_marginStart="20dp"
+        android:layout_marginEnd="20dp"
         android:layout_marginBottom="32dp"/>
 
 </LinearLayout>
